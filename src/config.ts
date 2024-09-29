@@ -60,20 +60,28 @@ export enum ProviderType {
   OpenAI = 'OpenAI',
 }
 
-interface OpenAIProviderConfig {
-  model: string
+interface ProviderConfig {
   apiKey: string
+  baseUrl?: string
+  model?: string
 }
 
-interface GeminiProviderConfig {
-  apiKey: string
+export const PROVIDER_CONFIG_DEFAULT = {
+  [ProviderType.Gemini]: {
+    baseUrl: 'https://generativelanguage.googleapis.com', 
+    models: ['gemini-1.5-flash-latest','gemini-1.5-pro-latest','gemini-1.0-pro-latest','gemini-1.0-pro']
+  },
+  [ProviderType.OpenAI]: {
+    baseUrl: 'https://api.openai.com',
+    models: ['gpt-3.5-turbo','gpt-4o','gpt-4-turbo','gpt-4']
+  },
 }
 
 export interface ProviderConfigs {
   provider: ProviderType
   configs: {
-    [ProviderType.Gemini]: GeminiProviderConfig | undefined
-    [ProviderType.OpenAI]: OpenAIProviderConfig | undefined
+    [ProviderType.Gemini]: ProviderConfig | undefined
+    [ProviderType.OpenAI]: ProviderConfig | undefined
   }
 }
 
